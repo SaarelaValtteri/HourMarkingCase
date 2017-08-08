@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "User information";
+}
+<h2>@ViewBag.Title.</h2>
+
+<br />
+
+@foreach (var user in ViewBag.user)
+{
+
+    <p>First name: @user.firstName</p>
+    <hr />
+    <p>Last name: @user.lastName</p>
+    <hr />
+    <p>Email: @user.email</p>
+    <hr />
+    <p>Phone number: @user.phoneNumber</p>
+
+}
+
+<h3>Your current work targets:</h3>
+@foreach (var target in ViewBag.workTarget)
+{
+    <p>@target.name</p>
+}
+
+<hr />

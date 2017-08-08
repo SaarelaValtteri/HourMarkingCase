@@ -1,0 +1,58 @@
+﻿@model HourMarkingCase.Models.HourMarking
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HourMarking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.hours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tag.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tag.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkTarget.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkTarget.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

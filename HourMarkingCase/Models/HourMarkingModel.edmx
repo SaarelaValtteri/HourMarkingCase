@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="HourMarkingDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HourMarking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hours" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="workTargetId" Type="int" Nullable="false" />
+          <Property Name="tagId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="lastName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="phoneNumber" Type="varchar" MaxLength="200" />
+          <Property Name="isAdmin" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserWorkTarget">
+          <Key>
+            <PropertyRef Name="userId" />
+            <PropertyRef Name="workTargetId" />
+          </Key>
+          <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="workTargetId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkTarget">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="WorkTargetsTag">
+          <Key>
+            <PropertyRef Name="workTargetId" />
+            <PropertyRef Name="tagId" />
+          </Key>
+          <Property Name="workTargetId" Type="int" Nullable="false" />
+          <Property Name="tagId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_HourMarking_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="HourMarking" Type="Self.HourMarking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HourMarking">
+              <PropertyRef Name="tagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HourMarking_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="HourMarking" Type="Self.HourMarking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HourMarking">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HourMarking_WorkTarget">
+          <End Role="WorkTarget" Type="Self.WorkTarget" Multiplicity="1" />
+          <End Role="HourMarking" Type="Self.HourMarking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkTarget">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HourMarking">
+              <PropertyRef Name="workTargetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserWorkTarget_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserWorkTarget" Type="Self.UserWorkTarget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserWorkTarget">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_UserWorkTarget_WorkTarget">
+          <End Role="WorkTarget" Type="Self.WorkTarget" Multiplicity="1" />
+          <End Role="UserWorkTarget" Type="Self.UserWorkTarget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkTarget">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserWorkTarget">
+              <PropertyRef Name="workTargetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_WorkTargetsTag_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="WorkTargetsTag" Type="Self.WorkTargetsTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WorkTargetsTag">
+              <PropertyRef Name="tagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_WorkTargetsTag_WorkTarget">
+          <End Role="WorkTarget" Type="Self.WorkTarget" Multiplicity="1" />
+          <End Role="WorkTargetsTag" Type="Self.WorkTargetsTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkTarget">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WorkTargetsTag">
+              <PropertyRef Name="workTargetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HourMarkingDatabaseModelStoreContainer">
+          <EntitySet Name="HourMarking" EntityType="Self.HourMarking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tag" EntityType="Self.Tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserWorkTarget" EntityType="Self.UserWorkTarget" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkTarget" EntityType="Self.WorkTarget" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkTargetsTag" EntityType="Self.WorkTargetsTag" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_HourMarking_Tag" Association="Self.fk_HourMarking_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="HourMarking" EntitySet="HourMarking" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HourMarking_User" Association="Self.fk_HourMarking_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="HourMarking" EntitySet="HourMarking" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HourMarking_WorkTarget" Association="Self.fk_HourMarking_WorkTarget">
+            <End Role="WorkTarget" EntitySet="WorkTarget" />
+            <End Role="HourMarking" EntitySet="HourMarking" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserWorkTarget_User" Association="Self.fk_UserWorkTarget_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserWorkTarget" EntitySet="UserWorkTarget" />
+          </AssociationSet>
+          <AssociationSet Name="fk_UserWorkTarget_WorkTarget" Association="Self.fk_UserWorkTarget_WorkTarget">
+            <End Role="WorkTarget" EntitySet="WorkTarget" />
+            <End Role="UserWorkTarget" EntitySet="UserWorkTarget" />
+          </AssociationSet>
+          <AssociationSet Name="fk_WorkTargetsTag_Tag" Association="Self.fk_WorkTargetsTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="WorkTargetsTag" EntitySet="WorkTargetsTag" />
+          </AssociationSet>
+          <AssociationSet Name="fk_WorkTargetsTag_WorkTarget" Association="Self.fk_WorkTargetsTag_WorkTarget">
+            <End Role="WorkTarget" EntitySet="WorkTarget" />
+            <End Role="WorkTargetsTag" EntitySet="WorkTargetsTag" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HourMarkingDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HourMarking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hours" Type="Decimal" Precision="4" Scale="2" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="workTargetId" Type="Int32" Nullable="false" />
+          <Property Name="tagId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tag" Relationship="Self.fk_HourMarking_Tag" FromRole="HourMarking" ToRole="Tag" />
+          <NavigationProperty Name="User" Relationship="Self.fk_HourMarking_User" FromRole="HourMarking" ToRole="User" />
+          <NavigationProperty Name="WorkTarget" Relationship="Self.fk_HourMarking_WorkTarget" FromRole="HourMarking" ToRole="WorkTarget" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HourMarkings" Relationship="Self.fk_HourMarking_Tag" FromRole="Tag" ToRole="HourMarking" />
+          <NavigationProperty Name="WorkTargets" Relationship="Self.WorkTargetsTag" FromRole="Tag" ToRole="WorkTarget" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phoneNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="HourMarkings" Relationship="Self.fk_HourMarking_User" FromRole="User" ToRole="HourMarking" />
+          <NavigationProperty Name="WorkTargets" Relationship="Self.UserWorkTarget" FromRole="User" ToRole="WorkTarget" />
+        </EntityType>
+        <EntityType Name="WorkTarget">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HourMarkings" Relationship="Self.fk_HourMarking_WorkTarget" FromRole="WorkTarget" ToRole="HourMarking" />
+          <NavigationProperty Name="Users" Relationship="Self.UserWorkTarget" FromRole="WorkTarget" ToRole="User" />
+          <NavigationProperty Name="Tags" Relationship="Self.WorkTargetsTag" FromRole="WorkTarget" ToRole="Tag" />
+        </EntityType>
+        <Association Name="fk_HourMarking_Tag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="1" />
+          <End Role="HourMarking" Type="Self.HourMarking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HourMarking">
+              <PropertyRef Name="tagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HourMarking_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="HourMarking" Type="Self.HourMarking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HourMarking">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_HourMarking_WorkTarget">
+          <End Role="WorkTarget" Type="Self.WorkTarget" Multiplicity="1" />
+          <End Role="HourMarking" Type="Self.HourMarking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkTarget">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HourMarking">
+              <PropertyRef Name="workTargetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserWorkTarget">
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Role="WorkTarget" Type="Self.WorkTarget" Multiplicity="*" />
+        </Association>
+        <Association Name="WorkTargetsTag">
+          <End Role="Tag" Type="Self.Tag" Multiplicity="*" />
+          <End Role="WorkTarget" Type="Self.WorkTarget" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="HourMarkingDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HourMarkings" EntityType="Self.HourMarking" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="WorkTargets" EntityType="Self.WorkTarget" />
+          <AssociationSet Name="fk_HourMarking_Tag" Association="Self.fk_HourMarking_Tag">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="HourMarking" EntitySet="HourMarkings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HourMarking_User" Association="Self.fk_HourMarking_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="HourMarking" EntitySet="HourMarkings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_HourMarking_WorkTarget" Association="Self.fk_HourMarking_WorkTarget">
+            <End Role="WorkTarget" EntitySet="WorkTargets" />
+            <End Role="HourMarking" EntitySet="HourMarkings" />
+          </AssociationSet>
+          <AssociationSet Name="UserWorkTarget" Association="Self.UserWorkTarget">
+            <End Role="User" EntitySet="Users" />
+            <End Role="WorkTarget" EntitySet="WorkTargets" />
+          </AssociationSet>
+          <AssociationSet Name="WorkTargetsTag" Association="Self.WorkTargetsTag">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="WorkTarget" EntitySet="WorkTargets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HourMarkingDatabaseModelStoreContainer" CdmEntityContainer="HourMarkingDatabaseEntities">
+          <EntitySetMapping Name="HourMarkings">
+            <EntityTypeMapping TypeName="HourMarkingDatabaseModel.HourMarking">
+              <MappingFragment StoreEntitySet="HourMarking">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="hours" ColumnName="hours" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="workTargetId" ColumnName="workTargetId" />
+                <ScalarProperty Name="tagId" ColumnName="tagId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="HourMarkingDatabaseModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HourMarkingDatabaseModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkTargets">
+            <EntityTypeMapping TypeName="HourMarkingDatabaseModel.WorkTarget">
+              <MappingFragment StoreEntitySet="WorkTarget">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserWorkTarget" TypeName="HourMarkingDatabaseModel.UserWorkTarget" StoreEntitySet="UserWorkTarget">
+            <EndProperty Name="User">
+              <ScalarProperty Name="id" ColumnName="userId" />
+            </EndProperty>
+            <EndProperty Name="WorkTarget">
+              <ScalarProperty Name="id" ColumnName="workTargetId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="WorkTargetsTag" TypeName="HourMarkingDatabaseModel.WorkTargetsTag" StoreEntitySet="WorkTargetsTag">
+            <EndProperty Name="Tag">
+              <ScalarProperty Name="id" ColumnName="tagId" />
+            </EndProperty>
+            <EndProperty Name="WorkTarget">
+              <ScalarProperty Name="id" ColumnName="workTargetId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

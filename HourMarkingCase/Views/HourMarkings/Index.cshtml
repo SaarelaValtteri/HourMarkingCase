@@ -1,0 +1,76 @@
+﻿@model IEnumerable<HourMarkingCase.Models.HourMarking>
+
+@{
+    ViewBag.Title = "Hour Marking";
+}
+
+<h2>Hour Marking</h2>
+
+@if (ViewContext.HttpContext.User.Identity.Name == "a@b.c")
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+else
+{
+    <p>Admin priviliges are needed to make changes in the database</p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.hours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tag.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.firstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkTarget.name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.hours)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tag.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.firstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkTarget.name)
+        </td>
+        @if (ViewContext.HttpContext.User.Identity.Name == "a@b.c")
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        }
+
+        else
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            </td>
+        }
+    </tr>
+}
+
+</table>

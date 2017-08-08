@@ -1,0 +1,64 @@
+﻿@model HourMarkingCase.Models.HourMarking
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HourMarking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.hours)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hours)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tag.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tag.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkTarget.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkTarget.name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

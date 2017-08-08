@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<div class="jumbotron">
+    <h1>My ASP.NET Project</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>General Information</h2>
+        <p>
+            This is Valtteri Saarela's project for Juhani Välimäki's course: Web Application Project.
+            You can browse the site using the navigation bar.
+        </p>
+
+        <h3>IMPORTANT</h3>
+        <p>Admin login: a@b.c</p>
+        <p>User login: hhh@aaa.com</p>
+        <p><strong>password</strong>: A_b123</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Introspection</h2>
+        <p>I had an interesting time messing around with both IdeaCase database 
+           and Microsoft's default user database. Unfortunately the default database is
+           data-redundant but it's the best I could cook up in this amount of time.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Changes I made</h2>
+        <ul>
+            <li>Lumen bootstrap theme from Bootswatch.com</li>
+            <li>Basic CRUD pages for Users, Worktargets, Tags, HourMarkings</li>
+            <li>Connected Microsoft and IdeaCase database users by ID and email</li>
+            <li>About page: shows current logged in user information from multiple tables w/ ViewBag</li>
+            <li>Current user Id shows on top-right after login</li>
+            <li>Only account users have access to About and CRUD pages</li>
+            <li>Only admin user "a@b.c" is authorized to use the create, edit, delete functions</li>
+            <li> + Create, Edit, Delete buttons <u>visible only</u> to "a@b.c" for extra security</li>
+            <li>Details button set visible to account users for usability</li>
+            <li>Ordered User page by "isAdmin" property</li>
+        </ul>
+       
+    </div>
+</div> 
+
